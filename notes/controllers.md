@@ -52,8 +52,33 @@ The second example uses the `@params` method to pass in the specific param we wa
 
 ```ts
 @Get(':id')
-  findOne(@Param('id') id: string) {
-    return `Returns single coffee with id: ${id}`;
-  }
+findOne(@Param('id') id: string) {
+  return `Returns single coffee with id: ${id}`;
+}
+
+```
+
+### Returning Status Codes
+
+Nest automatically returns status codes with requests, however we can manually set these using the built-in decorator `@HttpCode`. We can pass in the enum `HttpStatus` to access any of the status codes available:
+
+```ts
+@Post()
+@HttpCode(HttpStatus.GONE)
+create(@Body() body) {
+  return `New coffee created: ${body}`;
+}
+
+```
+
+### Express Integration
+
+Express is used by default and Nest provides a decorator `@Res` providing access to Expresses methods, allowing us to fully manage the response object:
+
+```ts
+@Get('all')
+findAll(@Res() response) {
+  response.status(200).send('Returns all coffees');
+}
 
 ```
