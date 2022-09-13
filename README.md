@@ -25,6 +25,12 @@ npm i -g @nestjs/cli
 nest new
 ```
 
+### Run server
+
+```
+nest start --watch
+```
+
 ### Create new controller
 
 ```
