@@ -64,7 +64,7 @@ Nest automatically returns status codes with requests, however we can manually s
 
 ```ts
 @Post()
-@HttpCode(HttpStatus.GONE)
+@HttpCode(HttpStatus.CREATED)
 create(@Body() body) {
   return `New coffee created: ${body}`;
 }
@@ -81,4 +81,52 @@ findAll(@Res() response) {
   response.status(200).send('Returns all coffees');
 }
 
+```
+
+### CRUD
+
+Below is a simple example of a controller with crud operations:
+
+```ts
+import {
+  Body,
+  Controller,
+  Delete,
+  Get,
+  HttpCode,
+  HttpStatus,
+  Param,
+  Patch,
+  Post,
+  Res,
+} from "@nestjs/common";
+
+@Controller("coffees")
+export class CoffeesController {
+  @Get("all")
+  findAll(@Res() response) {
+    response.status(200).send("Returns all coffees");
+  }
+
+  @Get(":id")
+  findOne(@Param() params) {
+    return `Returns single coffee with id: ${params.id}`;
+  }
+
+  @Post()
+  @HttpCode(HttpStatus.CREATED)
+  create(@Body() body) {
+    return `New coffee created: ${body}`;
+  }
+
+  @Patch(":id")
+  update(@Param("id") id: string, @Body() body) {
+    return `This action updates coffee with id: ${id} - ${body}`;
+  }
+
+  @Delete(":id")
+  delete(@Param("id") id: string) {
+    return `Coffee with id: ${id} has been deleted`;
+  }
+}
 ```
